@@ -406,7 +406,18 @@
   </div>
 </section>
 
-<a href="https://wa.me/16786984043" class="wa-float"><i class="ti ti-brand-whatsapp"></i> <span>Chat with us</span></a>
+<!-- Botonera flotante de contacto (desplegable) -->
+<div class="cdock" id="cdock">
+  <div class="cdock-items">
+    <a class="cdock-btn cd-wa" href="https://wa.me/16786984043" data-label="WhatsApp" aria-label="Message us on WhatsApp"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></a>
+    <a class="cdock-btn cd-call" href="tel:6786984043" data-label="Call" aria-label="Call (678) 698-4043"><i class="ti ti-phone" aria-hidden="true"></i></a>
+    <a class="cdock-btn cd-mail" href="mailto:info@evlawncaregainc.net" data-label="Email" aria-label="Email us"><i class="ti ti-mail" aria-hidden="true"></i></a>
+    <a class="cdock-btn cd-fb" href="https://www.facebook.com/evlawncaregainc" target="_blank" rel="noopener noreferrer" data-label="Facebook" aria-label="Visit our Facebook page"><i class="ti ti-brand-facebook" aria-hidden="true"></i></a>
+    <a class="cdock-btn cd-gg" href="https://www.google.com/maps/search/?api=1&amp;query=EV%20Lawncare%20GA%20Inc%20Cumming%20GA" target="_blank" rel="noopener noreferrer" data-label="Reviews" aria-label="EV Lawncare on Google"><i class="ti ti-brand-google" aria-hidden="true"></i></a>
+    <a class="cdock-btn cd-dir" href="https://www.google.com/maps/dir/?api=1&amp;destination=3788+Canton+Hwy%2C+Cumming%2C+GA+30040" target="_blank" rel="noopener noreferrer" data-label="Directions" aria-label="Get directions"><i class="ti ti-map-2" aria-hidden="true"></i></a>
+  </div>
+  <button class="cdock-toggle" type="button" aria-expanded="false" aria-controls="cdock" aria-label="Open contact options"><i class="ti ti-messages cdock-i-open" aria-hidden="true"></i><i class="ti ti-x cdock-i-close" aria-hidden="true"></i></button>
+</div>
 </main>
 <footer class="footer">
   <div class="wrap">
@@ -544,6 +555,22 @@ document.querySelectorAll('[data-slider]').forEach((sl,idx)=>{
   nav.querySelectorAll('.nav-links a').forEach(function(a){
     a.addEventListener('click',function(){nav.classList.remove('open');});
   });
+})();
+
+/* Botonera flotante de contacto: abrir/cerrar (accesible) */
+(function(){
+  var dock=document.getElementById('cdock');
+  if(!dock)return;
+  var toggle=dock.querySelector('.cdock-toggle');
+  function setOpen(open){
+    dock.classList.toggle('open',open);
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    toggle.setAttribute('aria-label',open?'Close contact options':'Open contact options');
+  }
+  toggle.addEventListener('click',function(e){e.stopPropagation();setOpen(!dock.classList.contains('open'));});
+  document.addEventListener('click',function(e){if(!dock.contains(e.target))setOpen(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dock.classList.contains('open')){setOpen(false);toggle.focus();}});
+  dock.querySelectorAll('.cdock-btn').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
 })();
 </script>
 </body>
