@@ -1,0 +1,8 @@
+# Archivos fuente pesados — no forman parte del sitio publicado
+*.zip
+
+# Temporales / de trabajo
+scratchpad/
+*.tmp
+Thumbs.db
+.DS_Store
