@@ -168,7 +168,19 @@
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
-      <a href="services.html" class="on">Services</a>
+      <div class="nav-drop" data-drop>
+        <a href="services.html" class="nav-drop-toggle on" aria-haspopup="true" aria-expanded="false">Services <i class="ti ti-chevron-down"></i></a>
+        <div class="nav-drop-menu" role="menu">
+          <a role="menuitem" href="services/tree-services.html"><i class="ti ti-tree"></i> Tree services</a>
+          <a role="menuitem" href="services/stump-grinding.html"><i class="ti ti-stack-2"></i> Stump grinding</a>
+          <a role="menuitem" href="services/retaining-walls.html"><i class="ti ti-wall"></i> Retaining walls</a>
+          <a role="menuitem" href="services/fence-installation.html"><i class="ti ti-fence"></i> Fence installation</a>
+          <a role="menuitem" href="services/irrigation-systems.html"><i class="ti ti-droplet"></i> Irrigation systems</a>
+          <a role="menuitem" href="services/landscaping.html"><i class="ti ti-plant"></i> Landscaping</a>
+          <a role="menuitem" href="services/land-clearing.html"><i class="ti ti-bulldozer"></i> Land clearing</a>
+          <a href="services.html" class="nav-drop-all">See all services <i class="ti ti-arrow-right"></i></a>
+        </div>
+      </div>
       <a href="about.html">About us</a>
       <a href="index.html#areas">Service areas</a>
       <a href="gallery.html">Gallery</a>
@@ -357,8 +369,23 @@ if(vb){
     var open=nav.classList.toggle('open');
     t.setAttribute('aria-expanded',open?'true':'false');
   });
+  var mq=matchMedia('(max-width:900px)');
+  nav.querySelectorAll('[data-drop]').forEach(function(drop){
+    var dt=drop.querySelector('.nav-drop-toggle');
+    if(dt)dt.addEventListener('click',function(e){
+      if(mq.matches){e.preventDefault();var o=drop.classList.toggle('open');dt.setAttribute('aria-expanded',o?'true':'false');}
+    });
+  });
   nav.querySelectorAll('.nav-links a').forEach(function(a){
-    a.addEventListener('click',function(){nav.classList.remove('open');});
+    a.addEventListener('click',function(){
+      if(a.classList.contains('nav-drop-toggle')&&mq.matches)return;
+      nav.classList.remove('open');
+    });
+  });
+  document.addEventListener('click',function(e){
+    nav.querySelectorAll('[data-drop].open').forEach(function(drop){
+      if(!drop.contains(e.target))drop.classList.remove('open');
+    });
   });
 })();
 

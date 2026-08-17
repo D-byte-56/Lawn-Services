@@ -669,6 +669,60 @@ h2.eyebrow{line-height:1.4}
 .lightbox button:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media(max-width:600px){.lb-nav{width:44px;height:44px}.lb-prev{left:8px}.lb-next{right:8px}.lb-close{top:10px;right:12px}}
 
+/* NAV — desplegable de Servicios (mega-dropdown en escritorio, panel en móvil).
+   Marca el servicio activo con .on. Abre por hover/foco en escritorio y por
+   toque del rótulo en móvil (JS del bloque de menú). */
+.nav-drop{position:relative;display:flex;align-items:center}
+.nav-drop-toggle{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.nav-drop-toggle i{font-size:15px;transition:transform .3s}
+.nav-drop:hover .nav-drop-toggle i,.nav-drop.open .nav-drop-toggle i{transform:rotate(180deg)}
+/* puente invisible para no perder el hover en el hueco bajo el rótulo */
+.nav-drop::after{content:"";position:absolute;top:100%;left:-10px;right:-10px;height:18px}
+.nav-drop-menu{
+  position:absolute;top:calc(100% + 16px);left:50%;transform:translateX(-50%) translateY(8px);
+  min-width:340px;background:#fff;border-radius:16px;padding:10px;
+  box-shadow:0 24px 56px rgba(46,58,34,.24);border:1px solid rgba(46,58,34,.08);
+  opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .25s ease,transform .25s ease,visibility 0s linear .25s;
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;z-index:120;
+}
+.nav-drop:hover .nav-drop-menu,.nav-drop:focus-within .nav-drop-menu,.nav-drop.open .nav-drop-menu{
+  opacity:1;visibility:visible;pointer-events:auto;transform:translateX(-50%) translateY(0);transition-delay:0s;
+}
+.nav-drop-menu a{
+  display:flex;align-items:center;gap:11px;padding:12px 13px;border-radius:11px;
+  font-size:14px;color:var(--ink);transition:background .2s,color .2s;white-space:nowrap;
+}
+.nav-drop-menu a::after{display:none} /* anula el subrayado de .nav-links a */
+.nav-drop-menu a i{font-size:20px;color:var(--olive-600);transition:color .2s;flex-shrink:0}
+.nav-drop-menu a:hover{background:var(--cream);color:var(--ink)}
+.nav-drop-menu a:hover i{color:var(--clay)}
+.nav-drop-menu a.on{background:rgba(79,107,50,.12);color:var(--olive-700);font-weight:600}
+.nav-drop-menu a.on i{color:var(--olive-700)}
+.nav-drop-all{grid-column:1 / -1;justify-content:center!important;gap:7px!important;
+  color:var(--clay)!important;font-weight:600;margin-top:4px;padding-top:13px!important;
+  border-top:1px solid rgba(46,58,34,.1);border-radius:0}
+.nav-drop-all i{color:var(--clay)!important;font-size:16px!important}
+
+@media(max-width:900px){
+  /* En móvil el submenú se expande dentro del panel, no como capa flotante */
+  .nav-drop{display:block}
+  .nav-drop-toggle{justify-content:space-between;width:100%}
+  .nav-drop::after{display:none}
+  .nav-drop-menu{
+    position:static!important;transform:none!important;left:auto!important;min-width:0;
+    display:none;grid-template-columns:1fr;
+    background:transparent;border:none;box-shadow:none;padding:2px 0 6px 14px;
+    opacity:1!important;visibility:visible!important;pointer-events:auto;
+  }
+  .nav-drop.open .nav-drop-menu{display:grid}
+  .nav-drop-menu a{color:rgba(255,255,255,.9);padding:11px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+  .nav-drop-menu a i{color:var(--clay-light)}
+  .nav-drop-menu a:hover,.nav-drop-menu a.on{background:rgba(255,255,255,.08);color:#fff}
+  .nav-drop-menu a.on i{color:var(--clay-light)}
+  .nav-drop-all{border-top:1px solid rgba(255,255,255,.14);color:var(--clay-light)!important;justify-content:flex-start!important}
+}
+
 /* TABLER ICONS — subset local con solo los 66 glifos que usa el sitio */
 @font-face{
   font-family:"tabler-icons";
