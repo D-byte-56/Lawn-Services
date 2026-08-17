@@ -11,7 +11,9 @@ currency-dollar-off device-mobile-dollar droplet fence file-text list-details ma
 map-pin-check menu-2 mood-check phone photo plant-2 point-filled receipt-off send shield-check
 shield-lock sparkles stack-2 tools tree wall
 alert-triangle leaf ruler-2 seeding bug home stairs snowflake settings trees shovel truck
-adjustments-alt circle-check timeline-event-text""".split()
+adjustments-alt circle-check timeline-event-text
+messages x
+message backhoe bulldozer flame plant ripple mountain trowel""".split()
 
 css = (ROOT / "tools/fontsrc/tabler-icons.min.css").read_text(encoding="utf-8")
 cp = {}

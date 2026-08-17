@@ -31,10 +31,13 @@ MOVED_OUT = {
 }
 
 # (sufijo, lado largo, calidad)
+# Calidad afinada para peso web: WebP q62-72 se ve nítido a estos tamaños de
+# render y recorta el peso ~30% frente a q70-75, sin doble compresión (se
+# re-genera desde los JPG originales).
 VARIANTS = [
-    ("", 1600, 75),
-    ("-md", 1100, 72),
-    ("-sm", 700, 70),
+    ("", 1600, 72),
+    ("-md", 1100, 66),
+    ("-sm", 700, 62),
 ]
 
 def resize_long_side(im, target):

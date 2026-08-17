@@ -237,8 +237,9 @@ h2.eyebrow{line-height:1.4}
 
 /* AREAS */
 .area-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:center}
-.area-map{aspect-ratio:4/3;border-radius:var(--radius);background:linear-gradient(150deg,var(--sand-deep),#D5CCB4);display:flex;align-items:center;justify-content:center;border:1px solid rgba(46,58,34,.1)}
+.area-map{aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;background:linear-gradient(150deg,var(--sand-deep),#D5CCB4);display:flex;align-items:center;justify-content:center;border:1px solid rgba(46,58,34,.14);box-shadow:0 12px 34px rgba(46,58,34,.10)}
 .area-map i{font-size:44px;color:rgba(46,58,34,.26)}
+.area-map iframe{width:100%;height:100%;border:0;display:block}
 .area-list{list-style:none}
 .area-list li{display:flex;align-items:center;gap:13px;padding:17px 0;border-bottom:1px solid rgba(46,58,34,.1);font-size:17px}
 .area-list i{font-size:21px;color:var(--clay)}
@@ -589,7 +590,68 @@ h2.eyebrow{line-height:1.4}
 .form-ok h3{font-size:24px;margin-bottom:8px}
 .form-ok p{color:var(--ink-soft);font-size:15px}
 
-/* TABLER ICONS — subset local con solo los 58 glifos que usa el sitio */
+/* ============================================================
+   FOTOS EN CUADRÍCULA + LIGHTBOX (gallery, stats del home, about)
+   Carga diferida real: <img class="lazyimg"> sin src, se asigna
+   data-sm/data-md al acercarse al viewport (assets/lightbox.js).
+   ============================================================ */
+.gtile{
+  position:relative;display:block;overflow:hidden;border-radius:var(--radius);
+  border:1px solid rgba(46,58,34,.1);background:linear-gradient(150deg,var(--sand-deep),#D5CCB4);
+  box-shadow:0 8px 24px rgba(46,58,34,.08);cursor:zoom-in;
+}
+.gtile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gtile:hover img{transform:scale(1.05)}
+.gtile-tag{
+  position:absolute;left:0;right:0;bottom:0;padding:26px 13px 11px;z-index:1;pointer-events:none;
+  font-size:11.5px;font-weight:500;letter-spacing:.02em;color:#fff;
+  background:linear-gradient(0deg,rgba(16,22,10,.78),rgba(16,22,10,.28) 60%,transparent);
+  opacity:0;transition:opacity .3s;
+}
+.gtile:hover .gtile-tag,.gtile:focus-visible .gtile-tag{opacity:1}
+@media(hover:none){.gtile-tag{opacity:1}}
+.gtile:focus-visible{outline:3px solid var(--clay);outline-offset:2px}
+
+/* Estadísticas del home: una tarjeta + fotos, misma cuadrícula */
+.stat-media{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:58px}
+.stat-media .stat{margin:0;display:flex;flex-direction:column;justify-content:center}
+.stat-media .gtile{aspect-ratio:4/3}
+@media(max-width:760px){.stat-media{grid-template-columns:repeat(2,1fr)}}
+
+/* Galería: mosaico multicolumna que mezcla verticales y horizontales.
+   Cada tile lleva aspect-ratio inline para reservar su espacio antes de cargar. */
+.masonry{columns:4 250px;column-gap:15px}
+.masonry .gtile{width:100%;margin:0 0 15px;break-inside:avoid}
+@media(max-width:600px){.masonry{column-gap:11px}.masonry .gtile{margin-bottom:11px}}
+
+/* Índice de accesos rápidos de la galería */
+.gal-index{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.gal-chip{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(46,58,34,.18);border-radius:100px;padding:9px 16px;font-size:13.5px;color:var(--ink-soft);transition:border-color .25s,color .25s,background .25s}
+.gal-chip:hover{border-color:var(--clay);color:var(--ink);background:var(--cream)}
+.gal-chip i{font-size:16px;color:var(--olive-600)}
+.gal-sec{scroll-margin-top:96px}
+.gal-sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+.gal-sec-head h2{font-size:clamp(24px,3.2vw,34px)}
+.gal-sec-head .count{font-size:13px;color:var(--ink-soft)}
+.gal-sec-cta{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--clay);font-weight:500;white-space:nowrap}
+.gal-sec-cta i{transition:transform .25s}
+.gal-sec-cta:hover i{transform:translateX(5px)}
+
+/* LIGHTBOX — visor a pantalla completa con la versión de 1600px */
+.lightbox{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(16,22,10,.93);padding:24px}
+.lightbox.on{display:flex}
+.lb-fig{margin:0;max-width:min(1100px,92vw);max-height:90vh;display:flex;flex-direction:column;align-items:center;gap:12px}
+.lb-img{max-width:100%;max-height:82vh;object-fit:contain;border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,.55);background:#1E2A14}
+.lb-cap{color:rgba(250,247,240,.9);font-size:14px;text-align:center;max-width:60ch}
+.lb-close{position:absolute;top:16px;right:20px;width:46px;height:46px;border:none;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:26px;line-height:1;cursor:pointer;transition:background .2s}
+.lb-close:hover{background:rgba(255,255,255,.24)}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border:none;border-radius:50%;background:rgba(255,255,255,.12);color:#fff;font-size:22px;cursor:pointer;transition:background .2s}
+.lb-nav:hover{background:rgba(255,255,255,.24)}
+.lb-prev{left:18px}.lb-next{right:18px}
+.lightbox button:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(max-width:600px){.lb-nav{width:44px;height:44px}.lb-prev{left:8px}.lb-next{right:8px}.lb-close{top:10px;right:12px}}
+
+/* TABLER ICONS — subset local con solo los 66 glifos que usa el sitio */
 @font-face{
   font-family:"tabler-icons";
   font-style:normal;font-weight:400;font-display:block;
@@ -603,11 +665,13 @@ h2.eyebrow{line-height:1.4}
 .ti-adjustments-alt:before{content:"\ec37"}
 .ti-alert-triangle:before{content:"\ea06"}
 .ti-arrow-right:before{content:"\ea1f"}
+.ti-backhoe:before{content:"\ed86"}
 .ti-brand-facebook:before{content:"\ec1a"}
 .ti-brand-google:before{content:"\ec1f"}
 .ti-brand-whatsapp:before{content:"\ec74"}
 .ti-bug:before{content:"\ea48"}
 .ti-building-bank:before{content:"\ebe2"}
+.ti-bulldozer:before{content:"\ee1d"}
 .ti-calendar-stats:before{content:"\ee20"}
 .ti-cash:before{content:"\ea55"}
 .ti-check:before{content:"\ea5e"}
@@ -625,6 +689,7 @@ h2.eyebrow{line-height:1.4}
 .ti-droplet:before{content:"\ea97"}
 .ti-fence:before{content:"\ef2a"}
 .ti-file-text:before{content:"\eaa2"}
+.ti-flame:before{content:"\ec2c"}
 .ti-home:before{content:"\eac1"}
 .ti-leaf:before{content:"\ed4f"}
 .ti-list-details:before{content:"\ef40"}
@@ -633,13 +698,17 @@ h2.eyebrow{line-height:1.4}
 .ti-map-pin:before{content:"\eae8"}
 .ti-map-pin-check:before{content:"\f94c"}
 .ti-menu-2:before{content:"\ec42"}
+.ti-message:before{content:"\eaef"}
 .ti-messages:before{content:"\eb6c"}
 .ti-mood-check:before{content:"\f7b3"}
+.ti-mountain:before{content:"\ef97"}
 .ti-phone:before{content:"\eb09"}
 .ti-photo:before{content:"\eb0a"}
+.ti-plant:before{content:"\ed50"}
 .ti-plant-2:before{content:"\ed7e"}
 .ti-point-filled:before{content:"\f698"}
 .ti-receipt-off:before{content:"\edfb"}
+.ti-ripple:before{content:"\ed82"}
 .ti-ruler-2:before{content:"\eed2"}
 .ti-seeding:before{content:"\ed51"}
 .ti-send:before{content:"\eb1e"}
@@ -655,6 +724,7 @@ h2.eyebrow{line-height:1.4}
 .ti-tools:before{content:"\ebca"}
 .ti-tree:before{content:"\ef01"}
 .ti-trees:before{content:"\ec10"}
+.ti-trowel:before{content:"\f368"}
 .ti-truck:before{content:"\ebc4"}
 .ti-wall:before{content:"\ef7a"}
 .ti-x:before{content:"\eb55"}
