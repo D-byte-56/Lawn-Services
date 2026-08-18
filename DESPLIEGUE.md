@@ -6,6 +6,24 @@ formulario, las cabeceras de seguridad, y por qué "no se puede ocultar el códi
 
 ---
 
+## ✅ Checklist previo a producción (SiteGround)
+
+Revisar TODO esto **antes** de mover el sitio al servidor de verdad:
+
+- [ ] **1. Reemplazar las imágenes TEMPORALES de irrigation.** El carrusel de
+      `services/irrigation-systems.html` usa stock sin licencia (`assets/img/irrigation/TEMP-*`).
+      **No pueden ir a producción.** Sustituir por fotos reales de EV y borrar el prefijo `TEMP-`.
+      Instrucciones completas en **`IMAGENES-TEMPORALES.md`**.
+- [ ] 2. Confirmar que no queda ningún archivo `TEMP-*` en `assets/img/` ni comentarios
+      `⚠️ IMÁGENES TEMPORALES` en el HTML.
+- [ ] 3. Conectar el formulario real (`contact.php`) y probar un envío de prueba en el servidor.
+- [ ] 4. Conectar las reseñas reales de Google/Facebook (ver `COMO-CONECTAR-RESENAS.md`).
+- [ ] 5. Revisar que todas las galerías/carruseles carguen y no haya scroll horizontal en móvil.
+- [ ] 6. Verificar peso de carga inicial < 500KB en móvil en cada página.
+- [ ] 7. Subir `.htaccess` con las cabeceras de seguridad y comprobar HTTPS.
+
+---
+
 ## A) Subir a GitHub Pages (vista previa para el cliente)
 
 GitHub Pages muestra el sitio gratis, pero **no ejecuta PHP** (o sea, `contact.php` no corre allí).

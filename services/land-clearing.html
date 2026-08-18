@@ -265,8 +265,8 @@
 <main>
 <section class="sec sec-tight">
   <div class="wrap">
-    <div class="svc-hero-photo icon-panel reveal">
-      <i class="ti ti-bulldozer"></i>
+    <div class="svc-hero-photo reveal">
+      <img src="../assets/img/land-clearing/land-clearing-02-md.webp" srcset="../assets/img/land-clearing/land-clearing-02-sm.webp 700w, ../assets/img/land-clearing/land-clearing-02-md.webp 1100w" sizes="100vw" alt="Skid steer clearing brush on a wooded lot in North Georgia" decoding="async">
     </div>
     <div class="svc-lede reveal">
       <p>An overgrown lot hides more than it shows. Under the brush and vines there are old stumps, holes, drainage problems, and the kind of pests that move in when nobody's using the ground — snakes, ticks, and rodents. Until it's cleared, you can't really see what you have or use it for anything.</p>
@@ -291,8 +291,8 @@
           <li><i class="ti ti-check"></i> Ground graded and ready to work</li>
         </ul>
       </div>
-      <div class="feat-photo icon-panel reveal">
-        <i class="ti ti-backhoe"></i>
+      <div class="feat-photo reveal">
+        <img src="../assets/img/land-clearing/land-clearing-01-md.webp" srcset="../assets/img/land-clearing/land-clearing-01-sm.webp 700w, ../assets/img/land-clearing/land-clearing-01-md.webp 1100w" sizes="(max-width:900px) 100vw, 50vw" alt="Compact excavator working a cleared lot in North Georgia" decoding="async" loading="lazy">
       </div>
     </div>
   </div>
@@ -301,8 +301,8 @@
 <section class="sec sec-tight">
   <div class="wrap">
     <div class="split">
-      <div class="feat-photo icon-panel reveal">
-        <i class="ti ti-flame"></i>
+      <div class="feat-photo reveal">
+        <img src="../assets/img/land-clearing/land-clearing-03-md.webp" srcset="../assets/img/land-clearing/land-clearing-03-sm.webp 700w, ../assets/img/land-clearing/land-clearing-03-md.webp 1100w" sizes="(max-width:900px) 100vw, 50vw" alt="Skid steer clearing the edge of a tree line in North Georgia" decoding="async" loading="lazy">
       </div>
       <div class="feat-copy reveal">
         <div class="eyebrow">Brush, debris &amp; safety</div>
@@ -321,20 +321,27 @@
   </div>
 </section>
 
-<!-- GALERÍA: cuando Eduardo entregue las fotos de land clearing, reemplazar el bloque .soon
-     de abajo por el mismo carrusel que usan las otras páginas de servicio:
-     <div class="wrap svc-gallery"> ... <div class="slider" data-slider> ...slides... </div> </div>
-     Las fotos van en assets/img/land-clearing/ con variantes -md y -sm (usar tools/optimize_images.py). -->
 <section class="sec sec-tight sec-sand">
-  <div class="wrap">
-    <div class="soon reveal">
-      <div class="soon-ic"><i class="ti ti-photo"></i></div>
-      <h3>Photos of recent land clearing work are on the way.</h3>
-      <p>We're putting together before-and-after shots of cleared lots and opened property lines. In the meantime, send us your lot and we'll tell you exactly what it takes.</p>
-      <div class="cta-actions" style="justify-content:center">
-        <a href="https://wa.me/16786984043" class="btn btn-clay"><i class="ti ti-brand-whatsapp"></i> Message on WhatsApp</a>
-        <a href="../contact.html" class="btn btn-outline"><i class="ti ti-file-text"></i> Request an estimate</a>
-      </div>
+  <div class="wrap svc-gallery">
+    <div class="sec-head reveal" style="margin-bottom:34px">
+      <div class="eyebrow">Recent work</div>
+      <h2>Lots cleared around Cumming and Dawsonville.</h2>
+    </div>
+    <div class="slider reveal" data-slider>
+      <a class="slide on lbx" href="../assets/img/equipment/equipment-06.webp" data-caption="Land clearing · North Georgia" aria-label="Excavator on a cleared lot in North Georgia — open larger">
+        <img class="slide-bg" alt="" aria-hidden="true" decoding="async">
+        <img class="slide-img" data-md="../assets/img/equipment/equipment-06-md.webp" data-sm="../assets/img/equipment/equipment-06-sm.webp" decoding="async" alt="Mini excavator digging on a cleared lot in North Georgia — photo 1">
+      </a>
+      <a class="slide lbx" href="../assets/img/equipment/equipment-03.webp" data-caption="Land clearing · North Georgia" aria-label="Track loader on a cleared lot in North Georgia — open larger">
+        <img class="slide-bg" alt="" aria-hidden="true" decoding="async">
+        <img class="slide-img" data-md="../assets/img/equipment/equipment-03-md.webp" data-sm="../assets/img/equipment/equipment-03-sm.webp" decoding="async" alt="Compact track loader working a cleared lot in North Georgia — photo 2">
+      </a>
+      <a class="slide lbx" href="../assets/img/equipment/equipment-07.webp" data-caption="Land clearing · North Georgia" aria-label="Crew clearing brush with the chipper in North Georgia — open larger">
+        <img class="slide-bg" alt="" aria-hidden="true" decoding="async">
+        <img class="slide-img" data-md="../assets/img/equipment/equipment-07-md.webp" data-sm="../assets/img/equipment/equipment-07-sm.webp" decoding="async" alt="Crew clearing brush and running the chipper in North Georgia — photo 3">
+      </a>
+      <div class="slider-badge"><i class="ti ti-bulldozer"></i> Land clearing</div>
+      <div class="slider-dots"></div>
     </div>
   </div>
 </section>
@@ -561,5 +568,71 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   dock.querySelectorAll('.cdock-btn').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
 })();
 </script>
+<script>
+const IMG_KEY=matchMedia('(max-width: 768px)').matches?'sm':'md';
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('[data-slider]').forEach((sl,idx)=>{
+  const slides=[...sl.querySelectorAll('.slide')],dotsBox=sl.querySelector('.slider-dots');
+  if(slides.length<2){if(dotsBox)dotsBox.remove();
+    new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const img=sl.querySelector('.slide-img');if(img&&img.dataset[IMG_KEY]){const bg=sl.querySelector('.slide-bg');const fill=()=>{if(bg&&!bg.src)bg.src=img.currentSrc||img.src};img.addEventListener('load',fill,{once:true});img.src=img.dataset[IMG_KEY];if(img.complete)fill()}}})},{rootMargin:'300px 0px'}).observe(sl);
+    return}
+  let cur=0,timer=null;
+  function loadSlide(i){
+    const s=slides[(i+slides.length)%slides.length],img=s.querySelector('.slide-img');
+    if(!img||!img.dataset[IMG_KEY])return;
+    const bg=s.querySelector('.slide-bg');
+    const fill=()=>{if(bg&&!bg.src)bg.src=img.currentSrc||img.src};
+    img.addEventListener('load',fill,{once:true});
+    img.src=img.dataset[IMG_KEY];
+    delete img.dataset.sm;delete img.dataset.md;
+    if(img.complete)fill();
+  }
+  slides.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='dot'+(i===0?' on':'');
+    d.addEventListener('click',()=>{go(i);restart()});
+    dotsBox.appendChild(d);
+  });
+  const dots=[...dotsBox.children];
+  function go(i){
+    slides[cur].classList.remove('on');dots[cur].classList.remove('on');
+    cur=(i+slides.length)%slides.length;
+    slides[cur].classList.add('on');dots[cur].classList.add('on');
+    loadSlide(cur);loadSlide(cur+1);loadSlide(cur-1);
+  }
+  const start=()=>{if(RM)return;if(!timer)timer=setInterval(()=>go(cur+1),3600+idx*220)};
+  const stop=()=>{clearInterval(timer);timer=null};
+  const restart=()=>{stop();start()};
+  let booted=false;
+  new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        if(!booted){booted=true;loadSlide(0);loadSlide(1)}
+        start();
+      }else{
+        stop();
+      }
+    });
+  },{rootMargin:'300px 0px'}).observe(sl);
+  [['prev','chevron-left',-1,'Previous photo'],['next','chevron-right',1,'Next photo']].forEach(([cls,icon,step,label])=>{
+    const b=document.createElement('button');
+    b.type='button';b.className='slider-arrow '+cls;b.setAttribute('aria-label',label);
+    b.innerHTML='<i class="ti ti-'+icon+'"></i>';
+    b.addEventListener('click',()=>{go(cur+step);restart()});
+    sl.appendChild(b);
+  });
+  sl.addEventListener('mouseenter',stop);
+  sl.addEventListener('mouseleave',start);
+  let x0=null;
+  sl.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;stop()},{passive:true});
+  sl.addEventListener('touchend',e=>{
+    if(x0===null)return;
+    const dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>40)go(dx<0?cur+1:cur-1);
+    x0=null;start();
+  },{passive:true});
+});
+</script>
+<script src="../assets/lightbox.js" defer></script>
 </body>
 </html>
