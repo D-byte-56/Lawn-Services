@@ -249,7 +249,7 @@
       <a href="../gallery.html">Gallery</a>
       <a href="../contact.html">Contact</a>
     </div>
-    <a href="../contact.html" class="nav-cta"><i class="ti ti-brand-whatsapp"></i> Free estimate</a>
+    <a href="sms:6786984043" class="nav-cta"><i class="ti ti-message"></i> Text for a free estimate</a>
     <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><i class="ti ti-menu-2"></i></button>
   </div>
 </nav>
@@ -419,32 +419,7 @@
       <div class="eyebrow">More services</div>
       <h2>The rest of what we handle.</h2>
     </div>
-    <div class="svc-cards">
-      <a href="tree-services.html" class="svc-card reveal">
-        <div class="svc-card-icon"><i class="ti ti-tree"></i></div>
-        <h3>Tree services</h3>
-        <p>Removal, trimming, and storm cleanup — including tight-clearance drops.</p>
-        <span class="svc-card-link">See tree services <i class="ti ti-arrow-right"></i></span>
-      </a>
-      <a href="stump-grinding.html" class="svc-card reveal">
-        <div class="svc-card-icon"><i class="ti ti-stack-2"></i></div>
-        <h3>Stump grinding</h3>
-        <p>Ground below grade so you can sod, plant, or pour right over it.</p>
-        <span class="svc-card-link">See stump grinding <i class="ti ti-arrow-right"></i></span>
-      </a>
-      <a href="retaining-walls.html" class="svc-card reveal">
-        <div class="svc-card-icon"><i class="ti ti-wall"></i></div>
-        <h3>Retaining walls</h3>
-        <p>Block and stone walls built with the drainage and base that keep them standing.</p>
-        <span class="svc-card-link">See retaining walls <i class="ti ti-arrow-right"></i></span>
-      </a>
-      <a href="irrigation-systems.html" class="svc-card reveal">
-        <div class="svc-card-icon"><i class="ti ti-droplet"></i></div>
-        <h3>Irrigation systems</h3>
-        <p>Zoned installs, repairs, controller setup, and seasonal service.</p>
-        <span class="svc-card-link">See irrigation <i class="ti ti-arrow-right"></i></span>
-      </a>
-    </div>
+    <div class="svc-cards" data-current="fence-installation"></div>
   </div>
 </section>
 
@@ -629,5 +604,6 @@ document.querySelectorAll('[data-slider]').forEach((sl,idx)=>{
   dock.querySelectorAll('.cdock-btn').forEach(function(a){a.addEventListener('click',function(){setOpen(false);});});
 })();
 </script>
+<script src="../assets/services-cards.js"></script>
 </body>
 </html>
