@@ -5,10 +5,10 @@ Son **stock sin licencia** y **NO pueden quedar en el sitio publicado**.
 
 ## Qué son y de dónde vienen
 
-En la página de **Irrigation Systems** (`services/irrigation-systems.html`) el carrusel
-usa 4 imágenes de bancos de stock, porque todavía no hay fotos reales de trabajos de
-irrigation de EV Lawncare. Vinieron dentro de `IRRIGATION EV.zip` y son claramente
-material de stock / bancos de imágenes:
+En la página de **Irrigation Systems** (`services/irrigation-systems.html`) hay 4 imágenes
+de bancos de stock (foto de apertura, dos bloques `feat-photo` y la imagen final de galería),
+porque todavía no hay fotos reales de trabajos de irrigation de EV Lawncare. Vinieron dentro
+de `IRRIGATION EV.zip` y son claramente material de stock / bancos de imágenes:
 
 | Archivo temporal en el sitio | Origen (stock) | Qué muestra |
 |---|---|---|

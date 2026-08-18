@@ -10,8 +10,8 @@ formulario, las cabeceras de seguridad, y por qué "no se puede ocultar el códi
 
 Revisar TODO esto **antes** de mover el sitio al servidor de verdad:
 
-- [ ] **1. Reemplazar las imágenes TEMPORALES de irrigation.** El carrusel de
-      `services/irrigation-systems.html` usa stock sin licencia (`assets/img/irrigation/TEMP-*`).
+- [ ] **1. Reemplazar las imágenes TEMPORALES de irrigation.** Las 4 imágenes de
+      `services/irrigation-systems.html` usan stock sin licencia (`assets/img/irrigation/TEMP-*`).
       **No pueden ir a producción.** Sustituir por fotos reales de EV y borrar el prefijo `TEMP-`.
       Instrucciones completas en **`IMAGENES-TEMPORALES.md`**.
 - [ ] 2. Confirmar que no queda ningún archivo `TEMP-*` en `assets/img/` ni comentarios
