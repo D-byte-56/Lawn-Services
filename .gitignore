@@ -6,3 +6,6 @@ scratchpad/
 *.tmp
 Thumbs.db
 .DS_Store
+
+# Documentos personales — nunca deben publicarse
+*.docx
