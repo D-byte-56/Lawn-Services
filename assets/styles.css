@@ -59,11 +59,19 @@ h2.eyebrow{line-height:1.4}
 .nav-links a:hover::after{width:100%}
 .nav-cta{
   display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#fff;
+  white-space:nowrap;
   background:linear-gradient(135deg,var(--clay-light),var(--clay));
   padding:11px 20px;border-radius:100px;transition:transform .25s,box-shadow .25s;
   box-shadow:0 4px 18px rgba(181,96,47,.34);
 }
 .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(181,96,47,.5)}
+/* Etiqueta corta del CTA en teléfono (el texto largo se infla en pantallas chicas) */
+.nav-cta .cta-sm{display:none}
+@media(max-width:600px){
+  .nav-cta{font-size:13px;padding:9px 15px;gap:6px}
+  .nav-cta .cta-lg{display:none}
+  .nav-cta .cta-sm{display:inline}
+}
 .nav-toggle{display:none;width:44px;height:44px;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;margin-right:-8px;align-items:center;justify-content:center}
 
 /* VIDEO HERO */
