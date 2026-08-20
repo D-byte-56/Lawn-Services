@@ -1,112 +1,123 @@
 # Auditoría del sitio — EV Lawncare GA Inc
 
-Fecha: 2026-08-15 · Antes de publicar. Severidad: 🔴 crítico · 🟠 importante · 🟡 menor.
-Estado: ✅ corregido · 📄 entregado (archivo nuevo) · ⏳ pendiente de Eduardo.
+Fecha: **2026-08-20** (actualiza la auditoría del 2026-08-15).
+Severidad: 🔴 crítico · 🟠 importante · 🟡 menor.
+Estado: ✅ corregido en esta sesión · 🟢 ya estaba bien (verificado) · 📄 archivo entregado ·
+⏳ pendiente de vos (Eduardo).
 
-> **Resumen:** el sitio quedó listo para la vista previa en GitHub y preparado para SiteGround.
-> Todo lo crítico y lo importante está corregido. Lo único que falta es información que solo
-> tú tienes (endpoint de Formspree, link de Google Business) — está marcado y documentado.
+> **Resumen ejecutivo.** El sitio (12 páginas) está listo para producción a nivel SEO,
+> accesibilidad, enlaces y rendimiento. En esta sesión: se sacó el dominio inventado del código y
+> se centralizó en **un solo lugar**; se acortaron **los 12 títulos** (todos superaban 580px); se
+> ajustaron los H1 para incluir la zona; y se re-verificó todo (JSON-LD, canónicos, ALT, enlaces).
+> Lo único que falta es información que solo tenés vos (decidir el dominio, fotos reales de
+> irrigation, endpoint de Formspree/buzón info@, perfil de Google Business, horario de sábado).
 
 ---
 
-## 1. Formularios y correo
+## 1. SEO
 
 | Sev | Hallazgo | Estado |
 |-----|----------|--------|
-| 🔴 | El correo viejo `evlawncarega@gmail.com` aparecía en 12 lugares (footers, tarjeta de contacto, botón "Email us"). | ✅ Reemplazado por **info@evlawncaregainc.net** en las 9 páginas. Verificado: 0 apariciones del Gmail. |
-| 🔴 | El "formulario" de contacto **no enviaba nada**: era un enlace de WhatsApp disfrazado de botón, sin `<form>`, sin atributos `name`, sin validación. | ✅ Reconstruido como `<form>` real con `action="contact.php"` (SiteGround) y ruta Formspree (GitHub). |
-| 🟠 | No había campo ZIP ni campos obligatorios. | ✅ Campos **obligatorios**: Full name, Phone, Email, **ZIP**, Service. Message opcional. |
-| 🟠 | Sin validación de formato. | ✅ ZIP = exactamente 5 dígitos; Phone = formato EE.UU. (mín. 10 dígitos); Email = formato válido. **Probado en navegador:** vacíos bloqueados, ZIP de 4 dígitos o con letras rechazado, teléfono validado. |
-| 🟠 | Select Service podía traer landscaping. | ✅ 5 servicios actuales + "Not sure yet", opción vacía deshabilitada por defecto, sin landscaping. |
-| 🟠 | Sin protección anti-spam. | ✅ **Honeypot** (campo `company` oculto, `tabindex=-1`, fuera de pantalla) validado en navegador y en PHP. |
-| 🟠 | Funcionamiento sin JavaScript. | ✅ Con JS: mensajes propios por campo + foco al primer error + envío por `fetch`. Sin JS: la validación nativa del navegador bloquea el envío igual y el `<form>` postea a `contact.php`. |
-| 🟠 | Falta script de servidor para SiteGround. | 📄 **contact.php**: valida del lado del servidor (mismos criterios), escapa entradas (`strip_tags`, quita saltos de línea → evita inyección de cabeceras, `filter_var`, límites de largo), honeypot, y envía a info@. |
-| 🟠 | Probar envío de correo de punta a punta. | ⏳ **Necesita el endpoint de Formspree** (constante `FORMSPREE_ENDPOINT` marcada en contact.html) y acceso al buzón info@. No tengo ninguno de los dos, así que la entrega final del correo la confirmas tú (pasos en DESPLIEGUE.md). Todo lo demás quedó probado. |
+| 🔴 | **Dominio inventado escrito en todo el código** (`evlawncaregainc.net` en 138 lugares: canónicos, OG, Twitter, JSON-LD, sitemap, robots), pese a que el dominio final aún no está decidido. | ✅ Reemplazado por la **base real de la vista previa** `https://d-byte-56.github.io/Lawn-Services` (URL viva, nada muerto ni inventado). Centralizado en **`tools/set-domain.ps1`** (variable `SITE_DOMAIN="TU-DOMINIO-AQUI"`): el día del lanzamiento se cambia ahí una sola vez y se propaga a todos los archivos. |
+| 🟠 | **Los 12 `<title>` superaban los ~580px** (de 649px la home a 944px land clearing) → Google los cortaba. | ✅ Reescritos, manteniendo **servicio + ciudad**. Ahora todos entre **529 y 578px** (medido con Arial 20px, el criterio de Google). Antes/después abajo. |
+| 🟠 | **H1 sin la zona** en 11 de 12 páginas (tenían el servicio pero no la ubicación). | ✅ Ajustados para incluir Cumming & Dawsonville / North Georgia de forma natural, **un solo H1 por página** (verificado: 12/12 = exactamente 1). |
+| 🟡 | `about.html`: la meta description no nombraba la ciudad objetivo (decía "Forsyth/Dawson County"). | ✅ Reescrita con "Cumming, Dawsonville, North Georgia" (también en OG/Twitter). |
+| 🟢 | **Datos estructurados JSON-LD** — LocalBusiness (12/12), Service (7 servicios), FAQPage (7), BreadcrumbList (interiores). | Verificado: **parsea sin errores** en las 12 y usa la base de dominio centralizada. |
+| 🟢 | **Open Graph + Twitter Card** en las 12 páginas, con imagen propia 1200×630. | Verificado presentes y con URLs coherentes. |
+| 🟢 | **Canónicos coherentes y auto-referenciales** (cada página apunta a su propia ruta). | Verificado 12/12 OK. |
+| 🟢 | **sitemap.xml** (12 URLs) + **robots.txt** con la base de dominio; `lastmod` al día. | Verificado. |
+| 🟢 | **Descriptions únicas por página con ciudad**; **sin contenido duplicado** (cada servicio tiene intro, bloques y FAQ propios); **enlaces internos** vía nav, footer y "More services". | Verificado: 0 descriptions duplicadas. |
+
+**Antes / después de los títulos (px con Arial 20px; objetivo < 580):**
+
+| Página | Antes | Después |
+|--------|------:|--------:|
+| index | 697 | **547** |
+| about | 649 | **536** |
+| services | 876 | **533** |
+| gallery | 663 | **573** |
+| contact | 669 | **542** |
+| tree-services | 928 | **530** |
+| stump-grinding | 918 | **556** |
+| retaining-walls | 857 | **554** |
+| fence-installation | 889 | **573** |
+| irrigation-systems | 890 | **537** |
+| landscaping | 876 | **529** |
+| land-clearing | 944 | **540** |
 
 ---
 
-## 2. SEO
+## 2. Accesibilidad
 
 | Sev | Hallazgo | Estado |
 |-----|----------|--------|
-| 🟠 | index.html no tenía meta description. | ✅ Añadida. Las 9 páginas tienen **title + description únicos**, con la ciudad. |
-| 🟡 | Jerarquía de encabezados con saltos de nivel (footer `h4`, tarjetas "what's included" `h4` tras `h2`). | ✅ Corregida (footer→`h2`, included→`h3`, un encabezado de contacto→`h2`). **Un solo `<h1>` por página** (verificado). |
-| 🟠 | Sin datos estructurados. | 📄 **JSON-LD** en las 9: `LocalBusiness` (todas, con teléfono, correo, dirección, horario, áreas Cumming/Dawsonville y catálogo de 5 servicios), `Service` (5 páginas), `FAQPage` (5 páginas), `BreadcrumbList` (interiores). **Sintaxis validada** (sin errores). |
-| 🟠 | Sin Open Graph / Twitter Card. | 📄 Añadidos en las 9, con **imagen propia 1200×630 por página** (generadas en `assets/img/og/`). Se verán bien al compartir en Facebook/WhatsApp. |
-| 🟠 | Sin sitemap ni robots. | 📄 **sitemap.xml** (9 URLs) + **robots.txt** (apunta al sitemap). |
-| 🟡 | Etiqueta canonical. | 📄 Añadida en las 9 → `https://evlawncaregainc.net/…`. En la vista previa de GitHub, esto además evita que Google indexe la copia `github.io` como contenido duplicado. |
-| ✅ | URLs limpias, alt text con contexto local, enlaces internos entre páginas relacionadas, sin contenido duplicado (cada servicio tiene intro, bloques y FAQ propios). | Ya estaban bien. |
+| 🟢 | **Texto alternativo (ALT) en imágenes.** 170 `<img>` en total. | Verificado: **0 imágenes sin atributo `alt`**. 117 con ALT descriptivo y **contexto local** (Cumming, Dawsonville, North Georgia). 53 con `alt=""` son **decorativas correctas**: 24 son el logo (con el texto "EV Lawncare / GA Inc" al lado) y 29 son los fondos difuminados duplicados del carrusel. Ponerles ALT sería ruido para lectores de pantalla. |
+| 🟢 | **Un solo `<h1>` por página** y jerarquía de encabezados sin saltos. | Verificado 12/12. |
+| 🟢 | **Contraste de color** (corregido en la auditoría previa: `--ink-soft` y `--clay` oscurecidos a ≥4.8:1), landmark `<main>`, `prefers-reduced-motion` en carruseles/video/contadores, navegación por teclado, labels y errores anunciados en el formulario. | Sin cambios; sigue vigente. Conviene una pasada final de Lighthouse en el sitio en vivo. |
 
 ---
 
-## 3. Accesibilidad
-
-Medido con **axe-core** (el mismo motor que usan las herramientas de accesibilidad de Chrome / Lighthouse).
+## 3. Rendimiento y móvil
 
 | Sev | Hallazgo | Estado |
 |-----|----------|--------|
-| 🟠 (serio) | **Contraste de color insuficiente**: el gris `--ink-soft` (#6F7A5E) y el terracota `--clay` (#B5602F) daban 3.2–3.75:1 en texto pequeño (mínimo AA = 4.5:1). Afectaba subtítulos, textos secundarios y "eyebrows" en todo el sitio. | ✅ Oscurecidos a `#5C6650` y `#8F4620` (mismo tono, más profundo) → ahora ≥4.8:1. Verificado: **0 fallos de contraste**. |
-| 🟠 | Contenido no contenido en landmarks (faltaba `<main>`). | ✅ `<main>` añadido en las 9. Nav/encabezado/footer ya eran landmarks. |
-| 🟡 | Carruseles se auto-avanzaban aun con "reducir movimiento" activado. | ✅ Los carruseles, el video del hero y los contadores respetan `prefers-reduced-motion`. |
-| ✅ | Navegación por teclado (menú, desplegable móvil, acordeones `<details>`, flechas del carrusel con `aria-label` y foco visible), formulario con `label` asociados + errores anunciados (`aria-describedby`, `role="status"`), foco al primer error, alt text reales, carruseles no son la única vía a la información. | Verificado. |
-| 🟡 | Área táctil de controles (ver sección 5). | ✅ Corregido. |
+| 🟢 | Sin scroll horizontal en 375–1440px; áreas táctiles ≥44px en los controles clave; imágenes con `aspect-ratio` (CLS 0). | Verificado en auditoría previa; sin regresiones (esta sesión solo tocó texto de `<title>`/`<h1>`/meta, no layout). |
+| 🟡 | **LCP no medido** (no se puede capturar bien en el entorno de automatización). | ⏳ Recomiendo pasar la home y una página de servicio por **PageSpeed Insights** una vez en vivo por HTTPS. |
+| 🟡 | Optimización opcional: usar `assets/styles.min.css` en producción. | Documentado en DESPLIEGUE.md (el `.htaccess` ya comprime con gzip; es un extra menor). |
 
-**Resultado axe (con todo el contenido visible y acordeones abiertos):** index, servicios y contacto → **0 violaciones** (críticas, serias y moderadas). No pude ejecutar Lighthouse completo (no está expuesto en la automatización del navegador), pero la sección de accesibilidad de Lighthouse usa axe por debajo: 0 violaciones ≈ **100/100**. Conviene confirmarlo con Lighthouse en el sitio ya publicado.
+> Nota de contexto: el mayor peso del sitio sigue siendo la fuente de íconos (Tabler) y el video
+> del hero; ya hay un subconjunto de íconos y variantes WebP. No es bloqueante para lanzar.
 
 ---
 
-## 4. Seguridad
-
-Es un sitio estático; superficie de ataque pequeña. Enfoque en lo que importa:
+## 4. Enlaces rotos
 
 | Sev | Hallazgo | Estado |
 |-----|----------|--------|
-| 🔴 | Claves/tokens/credenciales en el código del navegador. | ✅ **Ninguna.** Revisado todo, incluidos comentarios. El único correo en el código es el público info@ (intencional, no es secreto). El endpoint de Formspree y el link de Google se pegan como texto público, no son credenciales. |
-| 🟠 | Enlaces externos sin `rel="noopener noreferrer"`. | ✅ Todos los externos (Facebook, Google, direcciones del mapa, reseñas) llevan `rel="noopener noreferrer"`. Se corrigió el único que faltaba (tarjeta de Facebook en contacto). |
-| 🟠 | Cabeceras de seguridad. | 📄 **.htaccess** para SiteGround: `Content-Security-Policy` (acotada a los servicios que se usan), `X-Content-Type-Options`, `Referrer-Policy`, `Strict-Transport-Security` (HSTS), `X-Frame-Options`, `Permissions-Policy`, HTTPS forzado, compresión, caché, y bloqueo de archivos internos (.md/.py/.zip). Qué hace cada una: en DESPLIEGUE.md. |
-| 🟠 | Sanitización de entradas del formulario. | ✅ Navegador (`maxlength`, `pattern`, honeypot) **y** PHP (`strip_tags`, quita saltos de línea, `filter_var`, topes de largo). |
-| 🟡 | HTTPS sin recursos mixtos. | ✅ Todo se pide por HTTPS; la CSP incluye `upgrade-insecure-requests`. |
-
-**Dependencias externas y qué dato del visitante recibe cada una:**
-- **Google Fonts** (fonts.googleapis / gstatic): IP + navegador del visitante al descargar las fuentes.
-- **Google Maps** (iframe en Contacto, *diferido*): IP + navegador, y cookies de Google si la persona tiene sesión abierta. Solo al bajar hasta el mapa.
-- **Formspree** (solo al **enviar** el formulario): recibe lo que la persona escribe (nombre, teléfono, email, ZIP, servicio, mensaje). Es su función.
-- **Featurable** (widget de reseñas, si se conecta, *diferido*): IP + navegador al cargar; muestra reseñas públicas de Google.
-- Ninguna recibe datos sin interacción: el mapa y las reseñas cargan diferidos, y el formulario solo envía al pulsar "Send".
-
-Sobre **"ocultar el código"**: no es posible en la web y bloquear clic derecho/F12 es mala práctica — explicado en DESPLIEGUE.md. Lo que SÍ se hizo: **CSS minificado** (`styles.min.css`) para producción, dejando `styles.css` sin minificar para editar.
+| 🟢 | Enlaces y recursos locales (`href`/`src`). | Verificado esta sesión: **563 referencias locales revisadas → 0 rotas**. |
+| 🟢 | Botones de "More services" (inyectados por JS desde una lista única). | Verificado: la lista tiene los 7 servicios; cada página excluye el actual y muestra los otros 6. Script incluido en las 7 páginas con el `data-current` correcto. |
+| 🟡 | Enlaces externos (Facebook, Google Business). | Apuntan a búsquedas del negocio en Google Maps / a la página de Facebook hasta tener las URLs reales (ver pendientes). Llevan `rel="noopener noreferrer"`. |
 
 ---
 
-## 5. Rendimiento y móvil
+## 5. Botones de contacto (punto pedido)
 
 | Sev | Hallazgo | Estado |
 |-----|----------|--------|
-| 🟠 | Desbordamiento horizontal / scroll lateral. | ✅ **Ninguno** en 375, 390, 414, 768 y 1440px en las 9 páginas (probado cargando cada página al ancho real). El único elemento que "sobresale" a 768 es el fondo difuminado del carrusel, recortado por `overflow:hidden` — no genera scroll. |
-| 🟡 | Áreas táctiles < 44×44px. | ✅ Hamburguesa 26×31 → **44×44**; íconos sociales 40 → **44**; enlaces de footer y breadcrumbs con más alto en móvil. Quedan la marca (42px) y un breadcrumb (38px): aceptables (objetivos grandes / navegación secundaria). |
-| ✅ | Textos legibles sin zoom, botón flotante y menú móvil no tapan contenido, fotos verticales del carrusel se ven completas (contain sobre fondo difuminado). | Verificado. |
-
-**Peso (móvil, variantes `-sm`):** inicial (HTML + CSS + fuente de íconos) ≈ 50–90 KB por página — el CSS pesa 29 KB minificado y ~7 KB con la compresión gzip del `.htaccess`. Full-scroll con todas las fotos: tree 478 KB · stump 818 KB · walls 752 KB · fence 786 KB · irrigation 61 KB. Todo **bajo el presupuesto de <1 MB en móvil**; las fotos cargan progresivamente (no de golpe).
-
-**Core Web Vitals (medido en localhost):** **CLS = 0** (cero saltos de layout — las animaciones usan opacidad/transform y las imágenes reservan su espacio con `aspect-ratio`). **FCP ≈ 0.7 s**. **LCP:** no se pudo capturar dentro del entorno de automatización; recomiendo medirlo con **PageSpeed Insights** sobre el dominio publicado. **INP:** se espera excelente (el JavaScript es mínimo y liviano).
+| 🟢 | **Header y hero → mensaje de texto (SMS)** con textos distintos. | Verificado: el botón del **header** usa `sms:6786984043` ("Text for a free estimate") en las 12 páginas; el **hero** de la home usa `sms:6786984043` ("Text us today"). Las demás páginas usan `.pagehead` sin botón. Los botones de WhatsApp que quedan (CTA final, dock flotante, footer, tarjetas de contacto) son **canales de contacto intencionales**, no header/hero. |
+| 🟢 | **"More services": faltaban landscaping y land clearing.** | Verificado: la fuente única `assets/services-cards.js` ya incluye **los 7** servicios; cada página muestra los otros 6. |
 
 ---
 
-## 6. Revisión final
+## 6. Textos y contenido pendiente
 
-| Ítem | Resultado |
-|------|-----------|
-| Enlaces (clic real + rastreo) | **65 URLs** revisadas (enlaces, CSS, imágenes y OG) en las 9 páginas → **0 rotas**. |
-| Errores de consola | **0 del sitio.** Los que aparecen son de una extensión de Chrome ("message channel closed"), no del código. |
-| Ortografía/gramática (EN) | Sin errores comunes, sin dobles espacios. |
-| Textos de ejemplo / lorem / placeholders | Ninguno olvidado. (Los `placeholder=` de los inputs son correctos; hay un comentario interno en español en el código, no visible.) |
-| `href="#"` pendientes | **0.** Antes había 9 (icono de Google Business); ahora apuntan a la búsqueda del negocio en Google Maps hasta tener el perfil real. |
+| Sev | Hallazgo | Estado |
+|-----|----------|--------|
+| 🟠 | **Imágenes TEMP de irrigation** (4 fotos de stock sin licencia en `services/irrigation-systems.html`). | ⏳ Se dejan **a propósito** en la vista previa para mostrar el diseño; **deben reemplazarse por fotos reales antes de producción** (pasos en `IMAGENES-TEMPORALES.md` y en la guía). |
+| 🟢 | Sin lorem/placeholders olvidados, sin `href="#"`, sin errores de consola del sitio. | Sin cambios respecto a la auditoría previa. |
 
 ---
 
-## Pendientes de Eduardo (no bloquean la vista previa)
+## Pendientes de vos (Eduardo) — no bloquean la vista previa
 
-1. **Endpoint de Formspree** (para que el formulario envíe en GitHub) + confirmar que el buzón **info@evlawncaregainc.net** ya funciona. → DESPLIEGUE.md, sección Formulario.
-2. **Link del perfil de Google Business / enlace de reseña** (`g.page/…/review`) — para el botón "Leave us a review", el ícono social del footer y el widget de reseñas.
-3. **Fotos de Irrigation** — su página quedó lista para recibirlas (ver COMO-CONECTAR-RESENAS.md y el comentario en la página).
-4. **Horario de sábado**: el sitio dice "Mon–Sat". Si no trabajan sábados, avísame para ajustar textos y el dato de horario en el JSON-LD.
+1. **Decidir el dominio final.** Cuando lo tengas: ponerlo en `tools/set-domain.ps1` (una línea) y
+   ejecutar el script. Paso a paso en **GUIA-SITEGROUND.md**.
+2. **Endpoint de Formspree** (para que el formulario envíe en GitHub) + confirmar que el buzón
+   **info@evlawncaregainc.net** funciona. *(Confirmado por vos: ese correo es el definitivo.)*
+3. **Fotos reales de Irrigation** para reemplazar las 4 imágenes TEMP.
+4. **Perfil de Google Business / enlace de reseña** (para el botón "Leave a review", el ícono del
+   footer y el widget de reseñas).
+5. **Horario de sábado**: el sitio y el JSON-LD dicen "Mon–Sat 07:00–17:00". Si no trabajan
+   sábados, avisame y lo ajusto en textos y datos estructurados.
+
+---
+
+## Cómo se verificó (esta sesión)
+
+- **Títulos:** medidos en píxeles con la fuente Arial 20px (criterio de Google) — los 12 < 580px.
+- **JSON-LD:** cada bloque `application/ld+json` parseado con un validador JSON — 0 errores.
+- **Canónicos / H1:** script que confirma 1 `<h1>` por página y que cada canónico apunta a su
+  propia ruta — 12/12 OK.
+- **ALT:** escaneo de las 170 `<img>` — 0 sin `alt`; clasificación de las 53 decorativas.
+- **Enlaces:** resolución de las 563 referencias locales contra el sistema de archivos — 0 rotas.
+- **Dominio:** grep final — 0 apariciones del dominio web salvo el correo `info@…` (correcto).
