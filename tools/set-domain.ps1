@@ -30,7 +30,7 @@
 #>
 
 # >>> PONÉ TU DOMINIO ACÁ (una sola vez) <<<
-$SITE_DOMAIN = "TU-DOMINIO-AQUI"
+$SITE_DOMAIN = "evlawncaregainc.net"
 
 # Base de la vista previa en GitHub Pages (no cambiar).
 $PREVIEW_BASE = "https://d-byte-56.github.io/Lawn-Services"

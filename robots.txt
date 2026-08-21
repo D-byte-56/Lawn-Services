@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://d-byte-56.github.io/Lawn-Services/sitemap.xml
+Sitemap: https://evlawncaregainc.net/sitemap.xml
