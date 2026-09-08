@@ -4,14 +4,25 @@
 #  (GitHub Pages ignora este archivo; solo aplica en SiteGround.)
 # ============================================================================
 
-# ---- Forzar HTTPS ----------------------------------------------------------
+# ---- Redirecciones canónicas (HTTPS, sin www, sin index.html) --------------
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # 1) HTTP -> HTTPS (301)
+  #    nginx termina el SSL en SiteGround, así que Apache ve la petición interna como HTTP:
+  #    sin la condición sobre X-Forwarded-Proto se produce un bucle de redirección.
   RewriteCond %{HTTPS} !=on
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  # Opcional: forzar SIN www (descomenta si el dominio principal es sin www)
-  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+  RewriteRule ^ https://evlawncaregainc.net%{REQUEST_URI} [R=301,L,QSA]
+
+  # 2) www -> sin www (301)
+  RewriteCond %{HTTP_HOST} ^www\.evlawncaregainc\.net$ [NC]
+  RewriteRule ^ https://evlawncaregainc.net%{REQUEST_URI} [R=301,L,QSA]
+
+  # 3) /index.html -> / (301, solo cuando el navegador pide literalmente index.html)
+  #    La condición sobre THE_REQUEST evita el bucle con el DirectoryIndex interno.
+  RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.html[\s?] [NC]
+  RewriteRule ^(.*/)?index\.html$ /$1 [R=301,L,QSA]
 </IfModule>
 
 # ---- Cabeceras de seguridad ------------------------------------------------
