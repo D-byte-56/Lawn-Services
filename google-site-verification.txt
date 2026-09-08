@@ -1,0 +1,66 @@
+====================================================================
+ VERIFICACIÓN DE GOOGLE SEARCH CONSOLE — EV Lawncare GA Inc
+====================================================================
+
+Este archivo es solo una GUÍA. Google ofrece dos formas de demostrar
+que el sitio evlawncaregainc.net es tuyo. Elige UNA:
+
+
+--------------------------------------------------------------------
+OPCIÓN A — Archivo HTML (la más simple con SiteGround)
+--------------------------------------------------------------------
+1. En Search Console (https://search.google.com/search-console)
+   añade la propiedad de tipo "Prefijo de la URL":
+       https://evlawncaregainc.net/
+2. Google te dará un archivo llamado algo como:
+       google1234567890abcdef.html
+3. Descárgalo y SÚBELO a la RAÍZ del sitio en SiteGround, en la misma
+   carpeta donde está index.html (NO dentro de /services ni /assets).
+4. Comprueba que abre en el navegador:
+       https://evlawncaregainc.net/google1234567890abcdef.html
+5. Vuelve a Search Console y pulsa "Verificar".
+
+   >>> Pega aquí abajo el NOMBRE REAL del archivo que te dio Google,
+       para dejar constancia de cuál es:
+
+       ARCHIVO HTML DE GOOGLE:  ____________________________________
+
+
+--------------------------------------------------------------------
+OPCIÓN B — Meta etiqueta en el HTML
+--------------------------------------------------------------------
+1. En Search Console elige el método "Etiqueta HTML".
+2. Google te dará una línea así:
+       <meta name="google-site-verification" content="CADENA_LARGA">
+3. En index.html, dentro de <head>, justo después de "<!-- SEO -->",
+   ya hay esta línea comentada lista para activar:
+       <!-- <meta name="google-site-verification" content="PEGAR_AQUI"> -->
+   Quítale los <!-- y -->, y reemplaza PEGAR_AQUI por la cadena real.
+
+   >>> Pega aquí abajo la cadena "content" que te dio Google:
+
+       CONTENT DE LA META:  ________________________________________
+
+
+--------------------------------------------------------------------
+OPCIÓN C — Registro TXT de DNS (verifica el dominio entero)
+--------------------------------------------------------------------
+1. En Search Console añade la propiedad de tipo "Dominio":
+       evlawncaregainc.net
+2. Google te dará un registro TXT tipo:
+       google-site-verification=CADENA_LARGA
+3. Añádelo como registro TXT en el panel DNS del dominio y espera a
+   que propague (puede tardar de minutos a horas).
+
+   >>> Pega aquí abajo el valor TXT que te dio Google:
+
+       REGISTRO TXT DNS:  __________________________________________
+
+
+--------------------------------------------------------------------
+NOTA
+--------------------------------------------------------------------
+- No borres el método una vez verificado; Google revisa que siga
+  presente cada cierto tiempo.
+- Recomendado: OPCIÓN A (archivo HTML) por ser la más rápida en
+  SiteGround.
