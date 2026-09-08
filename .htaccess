@@ -29,7 +29,7 @@
 <IfModule mod_headers.c>
   # Solo permite recursos de sitios conocidos (fuentes de Google, mapa de Google,
   # widget de reseñas Featurable, envío del formulario a Formspree).
-  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://featurable.com; frame-src https://www.google.com https://maps.google.com https://featurable.com; connect-src 'self' https://formspree.io https://featurable.com; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+  Header always set Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://featurable.com https://www.googletagmanager.com; frame-src https://www.google.com https://maps.google.com https://featurable.com; connect-src 'self' https://formspree.io https://featurable.com https://www.googletagmanager.com https://*.google-analytics.com; form-action 'self' https://formspree.io; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
   # Evita que el navegador "adivine" el tipo de archivo (previene algunos ataques).
   Header always set X-Content-Type-Options "nosniff"
   # Cuánta info de referencia se manda a otros sitios: solo el dominio, no la ruta.
